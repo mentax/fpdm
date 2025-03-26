@@ -2072,17 +2072,18 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 
 										$encoding=($def[2]=="<") ? "hex" : "plain";
 
-										if(preg_match("/\/(V|DV|TU)\s+([\<\(])([^\)\>]+)([\>\)])/", $CurLine, $values))
+										if(preg_match("/\/(V|DV|TU)\s+([\<\(])([^\)\>]+)([\>\)])/", $CurLine, $values)) {
 											$value=$values[3];
 											$value=$this->decodeValue($encoding,$value);
-										}else
+										} else {
 											$value='';
+										}
 
-										if($verbose_parsing)
+										if($verbose_parsing) {
 											$this->dumpContent("$type $subtype (obj id=$obj) has $encoding $valuetype value [$value] at line $Counter");
+										}
 
-
-									}else if(preg_match("/^\/MaxLen\s+(\d+)/",$CurLine,$values)) {
+									} else if (preg_match("/^\/MaxLen\s+(\d+)/",$CurLine,$values)) {
 										$maxLen=$values[1];
 										$object["constraints"]["maxlen"]=intval($maxLen);
 									} else {
