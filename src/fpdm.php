@@ -2058,7 +2058,7 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 									//=== Now, start the serious work , read DV, V Values and eventually TU
 									//note if(preg_match_all("/^\/(V|DV)\s+(\<|\))([^\)\>]+)(\)|\>)/",$CurLine,$matches)) {
 									//do not work as all is encoded on the same line...
-									if(preg_match("/^\/(V|DV|TU)\s+([\<\(])/",$CurLine,$def)) {
+									if(preg_match("/\/(V|DV|TU)\s+([\<\(])/",$CurLine,$def)) {
 
 										//get an human readable format of value type and encoding
 
@@ -2072,7 +2072,7 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 
 										$encoding=($def[2]=="<") ? "hex" : "plain";
 
-										if(preg_match("/^\/(V|DV|TU)\s+(\<|\)|\()([^\)\>]*)(\)|\>\))/",$CurLine,$values)) {
+										if(preg_match("/\/(V|DV|TU)\s+([\<\(])([^\)\>]+)([\>\)])/", $CurLine, $values))
 											$value=$values[3];
 											$value=$this->decodeValue($encoding,$value);
 										}else
