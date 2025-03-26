@@ -2381,6 +2381,10 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 		
 		
 	}
+
+	public function getFields() {
+    		return array_keys($this->fields);
+	}
 	
 }
 
