@@ -2030,21 +2030,24 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 											if($verbose_parsing) echo("<br>Object's subType is '<i>$subtype</i>'");
 											
 										}
-										if(($name=="")&&preg_match("/^\/T\s?\((.+)\)\s*$/",$this->_protectContentValues($CurLine),$match)) {
-								
-											$name=$this->_unprotectContentValues($match[1]);
-											
-											//FIX: convert ASCII object names to utf-8
-											// don't use utf8_encode($name) yet, it's core function since php 7.2
-											$name = mb_convert_encoding($name, 'UTF-8', 'ASCII');
-											//ENDFIX
-											
-											if($verbose_parsing) echo ("Object's name is '<i>$name</i>'");
-											
-											$object["infos"]["name"]=$name; //Keep a track
-											$object["infos"]["name_line"]=$Counter;
-											
-											//$this->dumpContent(" Name [$name]");
+										if ($name == "") {
+										    // Try standard field name: /T (Vorname)
+										    if (preg_match("/^\/T\s?\((.+)\)\s*$/", $this->_protectContentValues($CurLine), $match)) {
+										        $name = $this->_unprotectContentValues($match[1]);
+										
+										    // Try hex-encoded field name: /T <566f726e616d65>
+										    } elseif (preg_match("/^\/T\s?\<([0-9A-Fa-f]+)\>\s*$/", $CurLine, $match)) {
+										        $name = $this->pdf_decode_field_value($match[1]);
+										    }
+										
+										    if (!empty($name)) {
+										        $name = mb_convert_encoding($name, 'UTF-8', 'ASCII');
+										
+										        if ($verbose_parsing) echo("Object's name is '<i>$name</i>'");
+										
+										        $object["infos"]["name"] = $name;
+										        $object["infos"]["name_line"] = $Counter;
+										    }
 										}
 										
 									}// else { 
