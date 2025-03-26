@@ -2378,14 +2378,12 @@ if (!call_user_func_array('class_exists', $__tmp)) {
         //--------------------
         	die('<b>FPDF-Merge Error:</b> '.$msg);	
         }
-		
-		
-	}
 
 	function getFields() {
     		return array_keys($this->fields);
 	}
-	
+		
+	}	
 }
 
 unset($__tmp);
