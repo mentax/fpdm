@@ -846,7 +846,7 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 			return $this->_bin2hex($str);
 		}
 		
-		function _set_field_value2($line,$value,$append$read_only) {
+		function _set_field_value2($line,$value,$append,$read_only) {
 			$CurLine=$this->pdf_entries[$line];
 			$OldLen=strlen($CurLine);
 
