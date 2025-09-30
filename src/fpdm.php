@@ -926,6 +926,31 @@ if (!call_user_func_array('class_exists', $__tmp)) {
                             $this->apply_offset_shift_from_object($parent_obj,$offset_shift);
                         }
                     }
+                    if (isset($this->value_entries["$name"]['infos']['parent_obj'])
+                        && isset($this->value_entries["$name"]["infos"]["checkbox_no"])
+                        && isset($this->value_entries["$name"]["infos"]["checkbox_yes"])) {
+                        $parent_obj = $this->value_entries["$name"]['infos']['parent_obj'];
+                        // We search for the position of the parent object:
+                        // The object ID has a space at the line end!
+                        $parent_obj_line = array_search($parent_obj . ' 0 obj ', $this->pdf_entries);
+                        if ($parent_obj_line === false) {
+                            if ($this->verbose&&($this->verbose_level>1)) {
+                                echo "<br>Could not find object [$parent_obj] which is the parent of checkbox [$name]";
+                            }
+                        } else {
+                            // insert a new line (with the selected value) in the parent object
+                            $state = $this->value_entries["$name"]["infos"]["checkbox_no"];
+                            if ($value) {
+                                $state = $this->value_entries["$name"]["infos"]["checkbox_yes"];
+                            }
+
+                            $state_line = " /V /$state ";
+                            $this->pdf_entries[$parent_obj_line + 4] = $this->pdf_entries[$parent_obj_line + 4] . $state_line;
+
+                            $offset_shift = strlen($state_line);
+                            $this->apply_offset_shift_from_object($parent_obj,$offset_shift);
+                        }
+                    }
                     $offset_shift=$this->set_field_checkbox($name, $value);
                 //ENDFIX
 				} else {//if(isset($this->value_entries["$name"]["values"]["$type"])) {
