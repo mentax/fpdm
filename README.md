@@ -24,6 +24,23 @@ This repository only contains the separate php class written for form filling (F
 
 Once again, all credits to Olivier Plathey for providing an easy to use script for form filling in addition to his FPDF library!
 
+## Requirements
+
+- PHP 8.0 or higher
+
+## Examples
+
+- Example scripts are available in the examples directory:
+  - examples\\ex-array.php
+  - examples\\ex-fdf.php
+  - examples\\fields.fdf (sample FDF file)
+
+## Development
+
+- Code style: php-cs-fixer is included as a dev dependency.
+  - Install dev tools: composer install
+  - Fix coding style: vendor\\bin\\php-cs-fixer fix
+
 ## Installation 
 
 ### Composer
